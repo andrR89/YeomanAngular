@@ -1,0 +1,18 @@
+<!-- Cardapio -->
+<div class="panel-heading jumbotron">
+    <h2> Cardapio </h2>
+</div>
+<table class="table table-striped table-bordered table-condensed">
+    <thead>
+        <tr>
+            <td class="col-md-4">descricao</td>
+            <td class="col-md-4">preco R$</td>
+        </tr>
+    </thead>	
+    <tbody>
+        <tr ng-repeat="item in itens">
+            <td class="col-md-4"><a href="#/item/{{item.id}}"> {{item.descricao}} </a></td>
+            <td class="col-md-4">{{item.preco| currency}}</td>
+        </tr>
+    </tbody>
+</table>

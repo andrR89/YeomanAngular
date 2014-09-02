@@ -1,0 +1,55 @@
+<div class="panel-heading jumbotron">
+    <h2> Pedido </h2>
+    <p> Numero de Pedidos : {{pedidos.length| number:0}}</p>
+</div>
+<input ng-hide="pedidos.length == 0" ng-model="pedidosSearch" type="text" placeholder="Buscar"  class="form-control">
+<table ng-hide="pedidos.length == 0" class="table table-striped table-bordered table-condensed">
+    <thead>
+        <tr>
+            <td class="col-md-4">Quantidade</td>
+            <td class="col-md-4"><a href="#/pedidos" ng-click="ordenarPor = 'item.descricao';
+                        reverse = !reverse">descricao</a></td>
+            <td class="col-md-4">preco R$</td>
+            <td class="col-md-4">Data</td>
+            <td class="col-md-4">Remover</td>
+        </tr>
+    </thead>	
+    <tbody>
+        <tr ng-repeat="pedido in pedidos| filter:pedidosSearch | orderBy:ordenarPor:reverse" >
+            <td ng-click="mostrarDetalhes(pedido)" class="col-md-4">
+                <span ng-show="!pedido.showDetalhes">
+                    {{pedido.quantidade}}
+                </span>
+                <span ng-show="pedido.showDetalhes">
+                    <input type="text" ng-model="pedido.quantidade" placeholder="Quantidade" ng-keyUp="atualizarQuantidade2(pedido)"/>
+                </span>
+            </td>
+            <td ng-click="mostrarDetalhes(pedido)" class="col-md-4">
+                {{pedido.item.descricao}}
+                <span ng-show="pedido.showDetalhes">
+                    <br/>{{pedido.item.preco| currency}}
+                </span>
+            </td>
+            <td class="col-md-4">{{pedido.total| currency}}</td>
+            <td class="col-md-4">{{pedido.data| date : 'dd/MM/yyyy HH:mm'}}</td>
+            <td class="col-md-4"> <button ng-click="cancelarPedidos(pedido)" class="btn btn-sm btn-danger"> X </button> </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">
+                Total : {{total| currency}}
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<form name="pedidoForm">
+    <input type="number" ng-model="pedido.quantidade" name="quantidade" placeholder="Quantidade" class="form-control" ng-required="true" ng-maxlenght="3"/>
+    <span ng-show="pedidoForm.quantidade.$invalid && pedidoForm.quantidade.$dirty" class="form-control alert-danger">Arrgh</span>
+    <select ng-model="pedido.item" ng-options="itemPedido.descricao for itemPedido in itensPedido" class="form-control" ng-required="true" name="produto" ng-required="true">
+        <option value="">Produto</option>
+    </select>
+    <span ng-show="pedidoForm.produto.$invalid && pedidoForm.produto.$dirty" class="form-control alert-danger">Urrgh</span>
+</form>
+<button ng-click="adicionarPedidos(pedido)" class="btn btn-lg btn-default btn-block" ng-disable="pedidoForm.$invalid" ng-show="pedidoForm.$invalid"> Add Pedidos</button>	
+<button ng-click="adicionarPedidos(pedido)" class="btn btn-lg btn-primary btn-block" ng-show="pedidoForm.$valid"> Add Pedidos</button>

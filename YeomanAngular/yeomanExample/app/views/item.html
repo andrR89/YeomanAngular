@@ -1,0 +1,31 @@
+
+<div class="panel-heading jumbotron" align="center">
+    PRODUTO
+</div>
+<div>
+    <div style="float:left;">
+        <div class="form-group">
+            <label>Nome</label>
+            <div class="col-sm-10">
+                {{item.descricao}}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Detalhes</label>
+            <div class="col-sm-10">
+                {{item.detalhes}}
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Preço</label>
+            <div class="col-sm-10">
+                {{item.preco | currency}}
+            </div>
+        </div>
+        <br/>
+    </div>
+    <div style="float:right; margin:5px;" class="bg-info">
+        <img src="images/{{item.imagem}}"/>
+    </div>
+</div>
